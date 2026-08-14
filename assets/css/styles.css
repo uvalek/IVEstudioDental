@@ -682,20 +682,42 @@ a:hover { color: var(--tinta); }
   .btn--nav { padding: 10px 16px; font-size: 13px; }
 }
 
-/* — Ajustes de teléfono — */
-@media (max-width: 620px) {
-  :root { --lateral: 20px; }
+/* — Franja de datos (5.0 en Google · Dos sucursales · …) —
+   Los cuatro datos van separados por una línea vertical. Eso sólo funciona
+   cuando los cuatro caben en una fila, y para eso hacen falta 848 px de
+   ventana (4 × 200 px + los márgenes laterales).
 
-  /* El recuadro "5.0 / 20 reseñas" se salía del marco de la foto */
-  .tarjeta-resenas { position: static !important; margin: -28px 0 0 !important; }
-
-  /* En columna sencilla el borde derecho de los datos sobra */
+   Por debajo de eso el `auto-fit` los repartía en 2 o 3 columnas y quedaban
+   líneas verticales sueltas al final de cada fila. Así que por debajo de
+   900 px se apilan en una sola columna y el separador pasa a ser horizontal:
+   se ve igual de ordenado en cualquier ancho. */
+@media (max-width: 900px) {
+  .rejilla--datos { grid-template-columns: 1fr; }
   .rejilla--datos > div {
     border-right: 0 !important;
     border-bottom: 1px solid var(--borde);
     padding: 20px 0 !important;
   }
   .rejilla--datos > div:last-child { border-bottom: 0; }
+}
+
+/* — Ajustes de teléfono — */
+@media (max-width: 620px) {
+  :root { --lateral: 20px; }
+
+  /* El recuadro "5.0 / 20 reseñas" se salía del marco de la foto: en móvil
+     baja a ser un bloque normal, montado 28 px sobre la foto.
+
+     Tiene que quedarse en "relative" (no "static"): el marco de la foto es un
+     elemento posicionado y, si la tarjeta deja de serlo, el marco se pinta por
+     encima y le tapa la fila de estrellas. */
+  .tarjeta-resenas {
+    position: relative !important;
+    left: auto !important;
+    bottom: auto !important;
+    z-index: 2;
+    margin: -28px 0 0 !important;
+  }
 
   .tarjeta__cuerpo { padding: 26px 22px 30px; }
 
