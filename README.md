@@ -80,7 +80,7 @@ Si algo sale mal, WhatsApp se abre igual pero sin mensaje. No rompe el sitio.
 
 ---
 
-## Los 12 datos que faltan
+## Los 6 datos que faltan
 
 Todo lo que está sin confirmar aparece **entre corchetes** y en color gris
 claro. Búscalo en `index.html` escribiendo `PENDIENTE` en el buscador: cada
@@ -89,13 +89,21 @@ uno tiene un comentario justo encima explicando qué va ahí.
 | # | Qué falta | Busca este texto |
 |---|---|---|
 | 1 | ¿Ofrecen limpieza, resinas, extracciones, blanqueamiento? | `[Para confirmar con el cliente:` |
-| 2–4 | Texto de 3 reseñas de Google | `[Reseña de Google — pendiente]` |
-| 5–7 | Nombre de quien dejó cada reseña | `[Nombre — pendiente]` |
-| 8 | Apellido del doctor | `[apellido pendiente]` |
-| 9 | Semblanza del doctor (2–3 párrafos) | `[Semblanza pendiente` |
-| 10 | Número de cédula profesional | `[Céd. Prof. — pendiente]` |
-| 11 | Torre y consultorio de Angelópolis | `[Torre y número de consultorio` |
-| 12 | Dirección real de la página de Facebook | `[enlace pendiente]` |
+| 2 | Apellido del doctor | `[apellido pendiente]` |
+| 3 | Semblanza del doctor (2–3 párrafos) | `[Semblanza pendiente` |
+| 4 | Número de cédula profesional | `[Céd. Prof. — pendiente]` |
+| 5 | Torre y consultorio de Angelópolis | `[Torre y número de consultorio` |
+| 6 | Dirección real de la página de Facebook | `[enlace pendiente]` |
+
+### Las reseñas ya están puestas
+
+Las tres reseñas del sitio son reales, copiadas de la ficha de Google el
+13/08/2026. Son las únicas tres que tienen texto escrito; las otras 17 son
+calificaciones de estrellas sin comentario. Están en dos lugares y si algún
+día se cambian hay que tocar los dos:
+
+1. La sección visible, dentro de las tarjetas con `<blockquote>`.
+2. La ficha de Google, en el bloque `"review"` del JSON-LD.
 
 ### Cómo llenar cada uno
 
@@ -304,6 +312,16 @@ Por si alguien retoma el proyecto:
 - **El sitio funciona sin JavaScript.** El menú del celular abre con una
   casilla de CSS; `main.js` sólo añade cerrar con Esc y al elegir una sección.
   Esto importa porque el export original no dibujaba nada sin JS.
+- **Las animaciones de entrada** (los desvanecidos al bajar) están encerradas
+  en la clase `.js`, que sólo se activa si el navegador ejecuta JavaScript. Sin
+  JS no se oculta nada: la página se ve completa y quieta. Lo mismo para quien
+  tenga activado "reducir movimiento" en su sistema. Si quieres quitarlas del
+  todo, borra el apartado 9 de `styles.css`.
+- **Caché:** `vercel.json` guarda las tipografías un año, las imágenes un día y
+  el CSS y el JS los revalida siempre. Esto último es a propósito: como esos
+  dos archivos se editan y conservan el mismo nombre, marcarlos como
+  "inmutables" haría que quien ya visitó el sitio siguiera viendo la versión
+  vieja durante meses.
 - **No hay dependencias.** `sharp` sólo se instala si vas a optimizar
   imágenes, y vive en `herramientas/`, fuera del sitio.
 - **Peso:** ~500 KB en la primera carga. El export original pesaba 17 MB.

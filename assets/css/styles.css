@@ -178,6 +178,17 @@ a:hover { color: var(--tinta); }
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+  /* Quien pidió no ver movimiento recibe todo visible desde el principio,
+     no una versión acelerada de la animación. */
+  .js .revelar,
+  .js .revelar-filete,
+  .js .revelar-cifra,
+  .js .revelar-estrellas svg,
+  .js .revelar-foto img {
+    opacity: 1 !important;
+    transform: none !important;
   }
 }
 
@@ -532,7 +543,74 @@ a:hover { color: var(--tinta); }
 .pendiente--bloque p { margin: 0; font-size: 13px; line-height: 1.8; }
 
 
-/* 9. RESPONSIVE ============================================================ */
+/* 9. ANIMACIONES DE ENTRADA ================================================
+   Los elementos aparecen con un desvanecido suave al entrar en pantalla.
+
+   Regla de oro: TODO esto está encerrado en `.js`, una clase que el propio
+   navegador añade sólo si el JavaScript funciona. Si no funciona, nada se
+   oculta y la página se ve completa de golpe. Nunca puede pasar que el
+   contenido quede invisible.
+
+   Quien prefiera no ver movimiento (ajuste del sistema operativo) lo recibe
+   todo visible y quieto: ver el bloque prefers-reduced-motion al final.      */
+
+/* Desvanecido subiendo. Es el que usan títulos, párrafos y tarjetas. */
+.js .revelar {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity   0.7s cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition-delay: calc(var(--r, 0) * 90ms);
+}
+.js .revelar.visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* El filete corto bajo los titulares se dibuja de izquierda a derecha */
+.js .revelar-filete {
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition-delay: calc(var(--r, 0) * 90ms);
+}
+.js .revelar-filete.visible { transform: scaleX(1); }
+
+/* Las estrellas van entrando una tras otra */
+.js .revelar-estrellas svg {
+  opacity: 0;
+  transform: scale(0.5);
+  transition:
+    opacity   0.45s ease-out,
+    transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.js .revelar-estrellas.visible svg { opacity: 1; transform: none; }
+.js .revelar-estrellas.visible svg:nth-child(1) { transition-delay: 0.05s; }
+.js .revelar-estrellas.visible svg:nth-child(2) { transition-delay: 0.13s; }
+.js .revelar-estrellas.visible svg:nth-child(3) { transition-delay: 0.21s; }
+.js .revelar-estrellas.visible svg:nth-child(4) { transition-delay: 0.29s; }
+.js .revelar-estrellas.visible svg:nth-child(5) { transition-delay: 0.37s; }
+
+/* El "5.0" grande entra un poco más despacio y creciendo apenas */
+.js .revelar-cifra {
+  opacity: 0;
+  transform: translateY(10px) scale(0.94);
+  transition:
+    opacity   0.8s ease-out,
+    transform 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.js .revelar-cifra.visible { opacity: 1; transform: none; }
+
+/* Las imágenes de las tarjetas se acercan muy ligeramente */
+.js .revelar-foto img {
+  transform: scale(1.06);
+  transition: transform 1.1s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.js .revelar-foto.visible img { transform: none; }
+
+
+/* 10. RESPONSIVE =========================================================== */
 
 /* — Menú desplegable por debajo de 800px — */
 @media (max-width: 800px) {
