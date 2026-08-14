@@ -1,0 +1,28 @@
+# macOS
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Vercel
+.vercel
+
+# Registros y temporales
+*.log
+npm-debug.log*
+node_modules/
+
+# El export original de Claude Design pesa 17 MB y no sirve para nada en
+# producción. Se conserva en la computadora como respaldo, fuera del repo.
+/_originales/
+IV Estudio Dental.html
+
+# Las fotos sin optimizar pesan 13 MB. Al sitio sólo suben las versiones
+# ligeras de assets/img/. Los originales quedan en la computadora, dentro de
+# _originales/assets-raw/, por si hay que regenerarlas.
+/herramientas/originales/*
+!/herramientas/originales/.gitkeep

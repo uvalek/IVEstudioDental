@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Al cambiar de dominio, actualizar esta línea (ver README.md)
+Sitemap: https://iv-estudio-dental.vercel.app/sitemap.xml

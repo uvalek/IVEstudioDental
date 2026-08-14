@@ -1,0 +1,633 @@
+/* ==========================================================================
+   IV Estudio Dental — hoja de estilos única
+   --------------------------------------------------------------------------
+   NO EDITAR salvo que sepas CSS. Para cambiar textos, teléfonos o imágenes
+   mira el README.md: nada de eso está aquí.
+
+   Orden del archivo:
+     1. Fuentes
+     2. Variables de color y medidas
+     3. Base y reset
+     4. Accesibilidad
+     5. Estructura
+     6. Menú superior
+     7. Componentes (botones, tarjetas, etiquetas…)
+     8. Bloques pendientes
+     9. Responsive
+   ========================================================================== */
+
+
+/* 1. FUENTES ===============================================================
+   Auto-hospedadas. El export original traía 18 archivos con alfabetos
+   cirílico, griego y vietnamita; en español no se usa ninguno. Quedan 4, y
+   el navegador sólo descarga "latin" salvo que aparezca un carácter raro. */
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url('../fonts/cormorant-garamond-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url('../fonts/cormorant-garamond-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+    U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
+    U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('../fonts/lora-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('../fonts/lora-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+    U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
+    U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+
+/* 2. VARIABLES =============================================================
+   Cuatro colores del diseño original se oscurecieron porque no pasaban el
+   contraste mínimo de accesibilidad (WCAG AA). Se anota el valor viejo al
+   lado por si algún día hay que rastrear el cambio. */
+
+:root {
+  /* Fondos */
+  --crema:        #F7F3EC;   /* secciones alternas */
+  --hueso:        #FCFAF7;   /* fondo general y tarjetas */
+  --piedra:       #EDEAE3;   /* marcos de imagen */
+  --borde:        #E4DED4;
+
+  /* Texto */
+  --tinta:        #23282B;   /* titulares */
+  --texto:        #4A5257;   /* cuerpo */
+  --texto-suave:  #687076;   /* antes #8A9299 — sólo daba 2.85:1 */
+  --texto-tenue:  #726C64;   /* antes #B4ADA2 — sólo daba 2.14:1 */
+
+  /* Azules de marca */
+  --azul:         #6E8492;   /* bordes, filetes, etiquetas: decorativo */
+  --azul-accion:  #5A6E7C;   /* antes #6E8492 — fondo de botones con texto claro */
+  --azul-oscuro:  #4C5F6B;   /* enlaces y estados hover */
+
+  /* Dorado */
+  --oro:          #B68235;   /* estrellas */
+  --oro-oscuro:   #8A6224;   /* texto de las etiquetas de horario */
+
+  /* Medidas */
+  --ancho-max:    1180px;
+  --lateral:      24px;
+  --alto-nav:     90px;      /* usado por scroll-margin-top de las anclas */
+}
+
+
+/* 3. BASE ==================================================================
+   Se conserva únicamente lo que el diseño original realmente usaba. El
+   sistema "Classical" que venía en el export traía .btn, .card, .nav, .table,
+   .dialog y 40 variables de color que la página no usaba en ningún lado. */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--hueso);
+  color: var(--tinta);
+  font-family: 'Lora', Georgia, serif;
+  font-size: 15px;
+  line-height: 1.55;
+  font-weight: 400;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+  margin: 0 0 9px;
+}
+
+p { margin: 0 0 14px; }
+
+img { display: block; max-width: 100%; }
+
+a { color: var(--azul-oscuro); text-decoration: none; text-underline-offset: 3px; }
+a:hover { color: var(--tinta); }
+
+::selection { background: rgba(110, 132, 146, 0.22); }
+
+/* Las cifras (horarios, teléfono, calificación) con ancho uniforme */
+.cifras { font-feature-settings: 'tnum'; }
+
+
+/* 4. ACCESIBILIDAD ========================================================= */
+
+:focus { outline: none; }
+:focus-visible {
+  outline: 2px solid var(--azul-accion);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Enlace "Saltar al contenido": invisible hasta que se navega con teclado */
+.saltar {
+  position: absolute;
+  left: 50%;
+  top: 8px;
+  transform: translate(-50%, -200%);
+  z-index: 100;
+  padding: 12px 22px;
+  background: var(--tinta);
+  color: var(--hueso);
+  border-radius: 999px;
+  font-size: 14px;
+  transition: transform 0.16s ease;
+}
+.saltar:focus {
+  transform: translate(-50%, 0);
+  color: var(--hueso);
+}
+
+/* Compensa la barra fija al saltar a una sección con el menú */
+[id] { scroll-margin-top: var(--alto-nav); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+
+/* 5. ESTRUCTURA ============================================================ */
+
+.contenedor {
+  max-width: var(--ancho-max);
+  margin: 0 auto;
+  padding: 0 var(--lateral);
+}
+
+.seccion       { padding: clamp(72px, 9vw, 124px) 0; }
+.seccion--corta { padding: clamp(72px, 9vw, 110px) 0; }
+.seccion--crema { background: var(--crema); }
+.seccion--linea { border-top: 1px solid var(--borde); }
+
+
+/* 6. MENÚ SUPERIOR =========================================================
+   El export original metía los 6 enlaces en un contenedor con scroll
+   horizontal y la barra de scroll oculta: en un celular se cortaban a media
+   palabra y no había forma de saber que se podía deslizar. Aquí se convierte
+   en un desplegable por debajo de 800px.
+
+   El desplegable funciona SIN JavaScript (casilla + etiqueta). El archivo
+   main.js sólo lo mejora: cierra al elegir una sección y con la tecla Esc. */
+
+.nav {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  max-width: calc(100% - 20px);
+  padding: 8px 10px 8px 18px;
+  background: rgba(252, 250, 247, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--borde);
+  border-radius: 999px;
+  box-shadow: 0 8px 24px rgba(35, 40, 43, 0.06);
+}
+
+.nav__logo {
+  display: block;
+  position: relative;
+  width: 46px;
+  height: 33px;
+  margin-right: 12px;
+  flex: none;
+  overflow: hidden;
+}
+.nav__logo img {
+  position: absolute;
+  width: 75px;
+  height: 75px;
+  max-width: none;
+  left: -15px;
+  top: -11px;
+  mix-blend-mode: multiply;
+}
+
+.nav__lista {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nav__enlace {
+  display: block;
+  padding: 8px 13px;
+  font-size: 13px;
+  color: var(--azul-oscuro);
+  border-radius: 999px;
+  white-space: nowrap;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.nav__enlace:hover { background: #F0F1F1; color: var(--tinta); }
+
+/* Control del desplegable: oculto en escritorio, visible bajo 800px */
+.nav__check,
+.nav__boton { display: none; }
+
+
+/* 7. COMPONENTES =========================================================== */
+
+/* — Botones — */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.2;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.btn svg { display: block; flex: none; }
+
+/* Relleno azul con texto claro: la acción principal (WhatsApp) */
+.btn--solido {
+  padding: 16px 26px;
+  background: var(--azul-accion);
+  color: var(--hueso);
+}
+.btn--solido:hover { background: var(--azul-oscuro); color: var(--hueso); }
+
+/* Contorno: acciones secundarias (teléfono, "Cómo llegar", "Ver reseñas") */
+.btn--linea {
+  padding: 16px 26px;
+  border: 1px solid var(--azul);
+  color: var(--azul-oscuro);
+}
+.btn--linea:hover { background: rgba(110, 132, 146, 0.09); color: var(--tinta); }
+
+/* Variante compacta */
+.btn--chico { padding: 13px 22px; font-size: 14px; gap: 9px; }
+
+/* Botón claro sobre el bloque azul del final */
+.btn--claro {
+  padding: 16px 26px;
+  background: var(--hueso);
+  color: var(--azul-oscuro);
+}
+.btn--claro:hover { background: var(--crema); color: var(--tinta); }
+
+/* El "Agenda tu cita" del menú */
+.btn--nav {
+  flex: none;
+  padding: 11px 20px;
+  font-size: 13px;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  background: var(--azul-accion);
+  color: var(--hueso);
+}
+.btn--nav:hover { background: var(--azul-oscuro); color: var(--hueso); }
+
+/* — Botón flotante de WhatsApp — */
+.wa-flotante {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 70;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 999px;
+  background: var(--azul-accion);
+  color: var(--hueso);
+  box-shadow: 0 10px 26px rgba(35, 40, 43, 0.18);
+  transition: background 0.15s ease;
+}
+.wa-flotante:hover { background: var(--azul-oscuro); color: var(--hueso); }
+
+/* — Etiqueta pequeña en versalitas sobre cada sección — */
+.antetitulo {
+  margin: 0 0 18px;
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--azul);
+}
+.antetitulo--tarjeta {
+  margin: 0;
+  letter-spacing: 0.2em;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--azul);
+}
+.antetitulo--oro { color: var(--oro-oscuro); }
+
+/* — Filete corto bajo los titulares — */
+.filete {
+  width: 56px;
+  height: 2px;
+  background: var(--azul);
+  margin: 24px 0 0;
+}
+.filete--hero { width: 64px; margin: 26px 0 28px; }
+.filete--sep  { margin: 24px 0 28px; }
+
+/* — Titulares — */
+.titular {
+  margin: 0;
+  font-weight: 300;
+  letter-spacing: 0;
+  color: var(--tinta);
+  text-wrap: pretty;
+}
+.titular--hero {
+  font-size: clamp(44px, 6.4vw, 78px);
+  line-height: 1.02;
+  letter-spacing: -0.005em;
+}
+.titular--seccion { font-size: clamp(34px, 4.6vw, 54px); line-height: 1.08; }
+.titular--media   { font-size: clamp(32px, 4.2vw, 50px); line-height: 1.1; }
+.titular--cta     { font-size: clamp(36px, 5vw, 58px); line-height: 1.06; color: var(--hueso); }
+
+.subtitular {
+  margin: 0;
+  font-weight: 500;
+  font-size: 26px;
+  line-height: 1.22;
+  letter-spacing: -0.01em;
+  color: var(--tinta);
+}
+.subtitular--chico { font-size: 21px; margin: 22px 0 10px; }
+.subtitular--mapa  { font-size: 25px; margin: 0 0 14px; }
+
+/* — Párrafos — */
+.entrada  { margin: 0; max-width: 44ch; font-size: 17px; line-height: 1.75; color: var(--texto); text-wrap: pretty; }
+.parrafo  { margin: 0; font-size: 15px; line-height: 1.75; color: var(--texto); text-wrap: pretty; }
+.parrafo--grande { font-size: 16px; }
+.parrafo--suave  { color: var(--texto-suave); font-size: 13px; }
+
+/* — Tarjetas — */
+.tarjeta {
+  border: 1px solid var(--borde);
+  border-radius: 4px;
+  background: var(--hueso);
+  overflow: hidden;
+}
+.tarjeta--flex { display: flex; flex-direction: column; }
+.tarjeta__cuerpo {
+  padding: 30px 28px 34px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  flex: 1;
+}
+.tarjeta__figura {
+  aspect-ratio: 1 / 1;
+  background: var(--piedra);
+  border-bottom: 1px solid var(--borde);
+  overflow: hidden;
+}
+.tarjeta__figura img { width: 100%; height: 100%; object-fit: cover; }
+
+/* — Cuadrículas — */
+.rejilla { display: grid; }
+.rejilla--tratamientos { grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 28px; margin-top: 56px; }
+.rejilla--razones      { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 40px 32px; margin-top: 56px; }
+.rejilla--sucursales   { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 28px; margin-top: 52px; }
+.rejilla--pie          { grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 44px 32px; padding-bottom: 44px; border-bottom: 1px solid var(--borde); }
+.rejilla--dos          { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: clamp(32px, 5vw, 72px); }
+.rejilla--datos        { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+
+/* — Estrellas — */
+.estrellas { display: flex; gap: 3px; color: var(--oro); }
+.estrellas--grande { gap: 4px; }
+
+/* — Círculo con icono (sección "Por qué elegirnos") — */
+.icono-circulo {
+  width: 54px;
+  height: 54px;
+  border: 1px solid var(--azul);
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--azul);
+}
+.icono-circulo--chico { width: 42px; height: 42px; flex: none; }
+
+/* — Etiqueta de horario ("Día completo", "Sí abrimos") — */
+.marca-horario {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 4px 10px;
+  border: 1px solid var(--oro);
+  border-radius: 999px;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--oro-oscuro);
+}
+
+/* — Fila de horario — */
+.fila-horario {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--borde);
+}
+.fila-horario p { margin: 0; font-size: 16px; }
+
+/* — Enlaces del pie — */
+.enlace-pie {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 14px;
+  color: var(--texto);
+  transition: color 0.15s ease;
+}
+.enlace-pie:hover { color: var(--tinta); }
+
+.columna-enlaces { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
+
+/* — Teléfono grande del bloque azul final — */
+.telefono-cta {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(38px, 5.2vw, 60px);
+  font-weight: 400;
+  color: var(--hueso);
+  transition: opacity 0.15s ease;
+}
+.telefono-cta:hover { color: var(--hueso); opacity: 0.82; }
+
+
+/* 8. BLOQUES PENDIENTES ====================================================
+   Todo lo que falta por confirmar con el cliente lleva la clase .pendiente.
+
+   ¿Necesitas enseñar el sitio antes de tener esos datos? Quita las dos barras
+   de la línea de abajo y desaparecen todos de golpe:
+
+   .pendiente { display: none !important; }
+
+   El listado completo de lo que falta está en el README.md.              */
+
+.pendiente {
+  color: var(--texto-tenue);
+}
+
+.pendiente--caja {
+  margin: 32px 0 0;
+  padding: 16px 20px;
+  border: 1px dashed #A89F91;
+  border-radius: 4px;
+  font-size: 13px;
+  line-height: 1.7;
+  background: var(--crema);
+}
+
+.pendiente--bloque {
+  border: 1px dashed #A89F91;
+  border-radius: 4px;
+  padding: 26px 24px;
+  background: var(--hueso);
+}
+.pendiente--bloque p { margin: 0; font-size: 13px; line-height: 1.8; }
+
+
+/* 9. RESPONSIVE ============================================================ */
+
+/* — Menú desplegable por debajo de 800px — */
+@media (max-width: 800px) {
+  .nav { gap: 4px; padding: 8px 10px 8px 14px; width: calc(100% - 20px); }
+  .nav__logo { margin-right: 8px; }
+
+  /* La casilla queda accesible por teclado pero no se ve */
+  .nav__check {
+    display: block;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .nav__boton {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-right: auto;
+    padding: 9px 14px;
+    font-size: 13px;
+    color: var(--azul-oscuro);
+    border-radius: 999px;
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+  }
+  .nav__boton:hover { background: #F0F1F1; }
+
+  /* Las tres rayitas */
+  .nav__boton::before {
+    content: '';
+    width: 15px;
+    height: 9px;
+    border-top: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    box-sizing: content-box;
+    position: relative;
+  }
+
+  /* Marco de foco cuando se llega con Tab */
+  .nav__check:focus-visible + .nav__boton {
+    outline: 2px solid var(--azul-accion);
+    outline-offset: 2px;
+  }
+
+  .nav__lista {
+    display: none;
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 2px;
+    padding: 10px;
+    background: var(--hueso);
+    border: 1px solid var(--borde);
+    border-radius: 18px;
+    box-shadow: 0 14px 34px rgba(35, 40, 43, 0.12);
+  }
+  .nav__check:checked ~ .nav__lista { display: flex; }
+
+  .nav__enlace { padding: 12px 16px; font-size: 15px; }
+
+  .btn--nav { padding: 10px 16px; font-size: 13px; }
+}
+
+/* — Ajustes de teléfono — */
+@media (max-width: 620px) {
+  :root { --lateral: 20px; }
+
+  /* El recuadro "5.0 / 20 reseñas" se salía del marco de la foto */
+  .tarjeta-resenas { position: static !important; margin: -28px 0 0 !important; }
+
+  /* En columna sencilla el borde derecho de los datos sobra */
+  .rejilla--datos > div {
+    border-right: 0 !important;
+    border-bottom: 1px solid var(--borde);
+    padding: 20px 0 !important;
+  }
+  .rejilla--datos > div:last-child { border-bottom: 0; }
+
+  .tarjeta__cuerpo { padding: 26px 22px 30px; }
+
+  .fila-horario { flex-direction: column; align-items: flex-start; gap: 6px; }
+
+  .wa-flotante { right: 14px; bottom: 14px; }
+}
+
+/* — Impresión: que se pueda imprimir la dirección y el teléfono — */
+@media print {
+  .nav, .wa-flotante, .saltar, iframe { display: none !important; }
+  body { background: #fff; }
+}
